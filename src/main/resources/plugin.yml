@@ -1,0 +1,5 @@
+name: MessageBuilder
+version: ${project.version}
+main: net.tycooncraft.messagebuilder.MessageBuilder
+api-version: 1.15
+authors: [ iTeije ]

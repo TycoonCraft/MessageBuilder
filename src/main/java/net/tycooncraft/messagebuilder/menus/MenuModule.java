@@ -1,5 +1,7 @@
 package net.tycooncraft.messagebuilder.menus;
 
+import lombok.Getter;
+import net.tycooncraft.messagebuilder.resources.PluginFile;
 import net.tycooncraft.messagebuilder.utils.menus.Menu;
 import net.tycooncraft.messagebuilder.utils.menus.enums.MenuType;
 import org.bukkit.entity.Player;
@@ -13,8 +15,12 @@ public class MenuModule {
 
     private final Map<String, Menu> cache;
 
-    public MenuModule() {
+    // TODO this is really bad practice, lets just say its subject to change
+    @Getter private final PluginFile savesFile;
+
+    public MenuModule(PluginFile savesFile) {
         this.cache = new HashMap<>();
+        this.savesFile = savesFile;
     }
 
     public Menu getMenu(String name, Player opener) {
@@ -36,9 +42,9 @@ public class MenuModule {
             Object object = null;
 
             for (Constructor<?> constructor : constructors) {
-                if (constructor.getParameterCount() == 0) object = constructor.newInstance();
-                if (constructor.getParameterCount() == 1) {
-                    if (players.length >= 1) object = constructor.newInstance(players[0]);
+                if (constructor.getParameterCount() == 1) object = constructor.newInstance(this);
+                if (constructor.getParameterCount() == 2) {
+                    if (players.length >= 1) object = constructor.newInstance(this, players[0]);
                 }
 
                 break;

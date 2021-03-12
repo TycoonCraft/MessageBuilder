@@ -1,8 +1,9 @@
 package net.tycooncraft.messagebuilder.utils.menus;
 
 import lombok.Getter;
-import net.tycooncraft.messagebuilder.utils.messaging.MessageUtil;
+import net.tycooncraft.messagebuilder.utils.menus.enums.MenuType;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
@@ -13,16 +14,19 @@ import java.util.Map;
 public class Menu implements InventoryHolder {
 
     private final String name;
+    @Getter private final MenuType type;
+
     @Getter private final Inventory inventory;
     private final Map<Integer, Item> slots = new HashMap<>();
 
-    public Menu(MessageUtil messageUtil, String title, int size) {
-        this(messageUtil, title, size, "general");
+    public Menu(String title, int size, MenuType type) {
+        this(title, size, "general", type);
     }
 
-    public Menu(MessageUtil messageUtil, String title, int size, String permission) {
+    public Menu(String title, int size, String permission, MenuType type) {
         this.name = permission;
-        this.inventory = Bukkit.createInventory(this, size, messageUtil.replaceColors(title));
+        this.type = type;
+        this.inventory = Bukkit.createInventory(this, size, ChatColor.translateAlternateColorCodes('&', title));
     }
 
     public Menu setItem(int slot, Item item) {

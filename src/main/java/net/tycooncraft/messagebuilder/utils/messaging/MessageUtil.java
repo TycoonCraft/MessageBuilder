@@ -1,6 +1,7 @@
 package net.tycooncraft.messagebuilder.utils.messaging;
 
 import org.bukkit.ChatColor;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class MessageUtil {
@@ -11,6 +12,10 @@ public class MessageUtil {
 
     public void sendMessage(String message, Player player) {
         player.sendMessage(replaceColors(message));
+    }
+
+    public void sendMessage(String message, CommandSender sender) {
+
     }
 
 }

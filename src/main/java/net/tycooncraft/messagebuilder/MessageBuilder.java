@@ -17,7 +17,6 @@ public final class MessageBuilder extends JavaPlugin {
         MenuModule menuModule = new MenuModule(savesFile);
         CommandModule commandModule = new CommandModule(this, messageUtil, menuModule);
 
-
     }
 
     @Override

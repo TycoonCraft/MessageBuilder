@@ -7,7 +7,7 @@ import net.tycooncraft.messagebuilder.utils.menus.enums.MenuType;
 public class CollectionMenu extends Menu {
 
     public CollectionMenu(MenuModule menuModule) {
-        super("&7Collections", 54, MenuType.STATIC);
+        super("&8Collections", 54, MenuType.STATIC);
 
     }
 }

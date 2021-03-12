@@ -23,15 +23,15 @@ public class MenuModule {
         this.savesFile = savesFile;
     }
 
-    public Menu getMenu(String name, Player opener) {
-        Menu menu = cache.getOrDefault(name, null);
+    public Menu getMenu(Class<?> menuClass, Player opener) {
+        Menu menu = cache.getOrDefault(menuClass.getSimpleName(), null);
         if (menu != null) {
             if (menu.getType() == MenuType.STATIC) return menu;
-            return load(name, false, opener);
+            return load(menuClass.getName(), false, opener);
         }
 
-        Menu newMenu = load(name, false, opener);
-        if (newMenu.getType() == MenuType.STATIC) this.cache.put(name, newMenu);
+        Menu newMenu = load(menuClass.getName(), false, opener);
+        if (newMenu.getType() == MenuType.STATIC) this.cache.put(menuClass.getSimpleName(), newMenu);
         return newMenu;
     }
 
@@ -57,9 +57,9 @@ public class MenuModule {
                 }
             }
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | InvocationTargetException exception) {
-            return new Menu("&7Menu not found", 27, MenuType.STATIC);
+            exception.printStackTrace();
         }
 
-        return new Menu("&7Menu not found", 27, MenuType.STATIC);
+        return new Menu("&8Menu not found", 9, MenuType.ERROR);
     }
 }

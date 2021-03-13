@@ -15,7 +15,7 @@ public class MenuModule {
 
     private final Map<String, Menu> cache;
 
-    // TODO this is really bad practice, lets just say its subject to change
+    // TODO this is really really really bad practice, lets just say its subject to change
     @Getter private final PluginFile savesFile;
 
     public MenuModule(PluginFile savesFile) {
@@ -23,21 +23,41 @@ public class MenuModule {
         this.savesFile = savesFile;
     }
 
+    /**
+     * Get a cached menu or load a new menu
+     * @param menuClass menu class to get or create an instance from
+     * @param opener player to load the menu for
+     * @return cached/new instance of the given menu
+     */
     public Menu getMenu(Class<?> menuClass, Player opener) {
         Menu menu = cache.getOrDefault(menuClass.getSimpleName(), null);
         if (menu != null) {
             if (menu.getType() == MenuType.STATIC) return menu;
-            return load(menuClass.getName(), false, opener);
+            return load(menuClass, false, opener);
         }
 
-        Menu newMenu = load(menuClass.getName(), false, opener);
+        Menu newMenu = load(menuClass, false, opener);
         if (newMenu.getType() == MenuType.STATIC) this.cache.put(menuClass.getSimpleName(), newMenu);
         return newMenu;
     }
 
-    public Menu load(String name, boolean cache, Player... players) {
+    /**
+     * Reload a menu that uses MenuType.STATIC
+     * @param menuClass menu class to reload
+     */
+    public void reload(Class<?> menuClass) {
+        this.load(menuClass, true);
+    }
+
+    /**
+     * Load any type of menu and cache it if required
+     * @param clazz menu class to load
+     * @param cache whether to save the menu in memory, for easy and fast access
+     * @param players optional player parameter for dynamic menus
+     * @return new instance of given menu
+     */
+    private Menu load(Class<?> clazz, boolean cache, Player... players) {
         try {
-            Class<?> clazz = Class.forName(name);
             Constructor<?>[] constructors = clazz.getConstructors();
             Object object = null;
 
@@ -52,11 +72,11 @@ public class MenuModule {
 
             if (object != null) {
                 if (object instanceof Menu) {
-                    if (cache) this.cache.put(name, (Menu) object);
+                    if (cache) this.cache.put(clazz.getSimpleName(), (Menu) object);
                     return (Menu) object;
                 }
             }
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | InvocationTargetException exception) {
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException exception) {
             exception.printStackTrace();
         }
 

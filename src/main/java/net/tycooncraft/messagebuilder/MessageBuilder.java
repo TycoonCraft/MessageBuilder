@@ -5,6 +5,7 @@ import net.tycooncraft.messagebuilder.menus.MenuModule;
 import net.tycooncraft.messagebuilder.resources.PluginFile;
 import net.tycooncraft.messagebuilder.utils.menus.listeners.InventoryClickListener;
 import net.tycooncraft.messagebuilder.utils.messaging.MessageUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -19,7 +20,7 @@ public final class MessageBuilder extends JavaPlugin {
         MenuModule menuModule = new MenuModule(savesFile);
         CommandModule commandModule = new CommandModule(this, messageUtil, menuModule);
 
-        this.registerListeners();
+        this.registerListeners(this);
     }
 
     @Override
@@ -27,8 +28,8 @@ public final class MessageBuilder extends JavaPlugin {
         // Plugin shutdown logic
     }
 
-    private void registerListeners() {
-        PluginManager manager = getServer().getPluginManager();
-        manager.registerEvents(new InventoryClickListener(), this);
+    private void registerListeners(MessageBuilder instance) {
+        PluginManager manager = Bukkit.getPluginManager();
+        manager.registerEvents(new InventoryClickListener(), instance);
     }
 }

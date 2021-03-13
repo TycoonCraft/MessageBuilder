@@ -61,8 +61,37 @@ public class Menu implements InventoryHolder {
         }
     }
 
-    public void fill(Point start, Point end, boolean onlyBorder) {
-        // todo
+    public void fill(Point start, Point end, boolean borderOnly, Material material) {
+        int deltaX = end.x - start.x;
+        ItemStack stack = new ItemStack(material, 1);
+
+        if (borderOnly) {
+            // fill top and bottom row
+            for (int x = start.x; x <= end.x; x++) {
+                int topRow = start.y * 9;
+                inventory.setItem(topRow + x, stack);
+
+                int bottomRow = end.y * 9;
+                inventory.setItem(bottomRow + x, stack);
+            }
+
+            // fill right and left column
+            for (int y = start.y + 1; y < end.y; y++) {
+                int column = y * 9;
+
+                inventory.setItem(column + start.x, stack);
+                inventory.setItem(column + (start.x == 0 ? deltaX : deltaX + start.x), stack);
+            }
+        } else {
+            // fill every row
+            for (int y = start.y; y <= end.y; y++) {
+                int column = y * 9;
+
+                for (int x = start.x; x <= end.x; x++) {
+                    inventory.setItem(column + x, stack);
+                }
+            }
+        }
     }
 
 }

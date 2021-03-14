@@ -1,1 +1,13 @@
 collections:
+  # Example collection
+  tycooncinematics:
+    name: TycoonCinematics
+    messages:
+      1:
+        name: "Help page"
+        lines:
+          - "&7---------- &e&lTYCOONCINEMATICS &7----------"
+          - "&7"
+          - "&a/cinematics create &e<name> &7Create a new track"
+          - "&7"
+          - "&7---------- &e&lTYCOONCINEMATICS &7----------"

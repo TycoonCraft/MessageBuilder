@@ -1,6 +1,7 @@
 package net.tycooncraft.messagebuilder;
 
 import net.tycooncraft.messagebuilder.commands.CommandModule;
+import net.tycooncraft.messagebuilder.content.ContentModule;
 import net.tycooncraft.messagebuilder.menus.MenuModule;
 import net.tycooncraft.messagebuilder.resources.PluginFile;
 import net.tycooncraft.messagebuilder.utils.menus.listeners.InventoryClickListener;
@@ -17,7 +18,8 @@ public final class MessageBuilder extends JavaPlugin {
 
         MessageUtil messageUtil = new MessageUtil();
 
-        MenuModule menuModule = new MenuModule(savesFile);
+        ContentModule contentModule = new ContentModule(savesFile);
+        MenuModule menuModule = new MenuModule(contentModule);
         CommandModule commandModule = new CommandModule(this, messageUtil, menuModule);
 
         this.registerListeners(this);

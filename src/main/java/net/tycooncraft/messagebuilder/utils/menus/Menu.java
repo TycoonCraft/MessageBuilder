@@ -27,8 +27,6 @@ public class Menu implements InventoryHolder {
     }
 
     public Menu(String title, int size, String permission, MenuType type) {
-        Bukkit.getLogger().info("Loading menu " + permission); // todo remove
-
         this.name = permission;
         this.type = type;
         this.inventory = Bukkit.createInventory(this, size, ChatColor.translateAlternateColorCodes('&', title));

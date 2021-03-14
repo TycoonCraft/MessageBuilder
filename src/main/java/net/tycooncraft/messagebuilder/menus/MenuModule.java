@@ -1,7 +1,7 @@
 package net.tycooncraft.messagebuilder.menus;
 
 import lombok.Getter;
-import net.tycooncraft.messagebuilder.resources.PluginFile;
+import net.tycooncraft.messagebuilder.content.ContentModule;
 import net.tycooncraft.messagebuilder.utils.menus.Menu;
 import net.tycooncraft.messagebuilder.utils.menus.enums.MenuType;
 import org.bukkit.entity.Player;
@@ -16,11 +16,11 @@ public class MenuModule {
     private final Map<String, Menu> cache;
 
     // TODO this is really really really bad practice, lets just say its subject to change
-    @Getter private final PluginFile savesFile;
+    @Getter private final ContentModule contentModule;
 
-    public MenuModule(PluginFile savesFile) {
+    public MenuModule(ContentModule contentModule) {
         this.cache = new HashMap<>();
-        this.savesFile = savesFile;
+        this.contentModule = contentModule;
     }
 
     /**

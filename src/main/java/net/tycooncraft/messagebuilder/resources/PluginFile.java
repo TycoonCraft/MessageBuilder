@@ -10,14 +10,12 @@ import java.io.IOException;
 
 public class PluginFile {
 
-    @Getter private FileConfiguration configuration;
+    @Getter private final FileConfiguration configuration;
     private final File file;
-    private final String fileName;
 
     public PluginFile(MessageBuilder instance, String fileName) {
         this.loadFile(instance, fileName);
 
-        this.fileName = fileName;
         this.file = new File(instance.getDataFolder(), fileName);
         this.configuration = YamlConfiguration.loadConfiguration(file);
     }

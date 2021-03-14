@@ -1,5 +1,6 @@
 package net.tycooncraft.messagebuilder.content;
 
+import lombok.Getter;
 import net.tycooncraft.messagebuilder.content.collections.Collection;
 import net.tycooncraft.messagebuilder.content.collections.CollectionAttribute;
 import net.tycooncraft.messagebuilder.content.objects.ValidationResponse;
@@ -14,7 +15,7 @@ import java.util.Set;
 public class ContentModule {
 
     private final PluginFile savesFile;
-    private final Map<String, Collection> collections;
+    @Getter private final Map<String, Collection> collections;
 
     public ContentModule(PluginFile savesFile) {
         this.savesFile = savesFile;

@@ -24,7 +24,7 @@ public class Collection {
     }
 
     public Object getAttribute(CollectionAttribute attribute) {
-        return this.attributes.get(attribute);
+        return this.attributes.getOrDefault(attribute, null);
     }
 
     public ValidationResponse isValid() {

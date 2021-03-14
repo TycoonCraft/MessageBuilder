@@ -11,7 +11,9 @@ import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Menu implements InventoryHolder {
@@ -90,6 +92,17 @@ public class Menu implements InventoryHolder {
                 }
             }
         }
+    }
+
+    public List<Integer> calculateSlots(Point start, Point end) {
+        List<Integer> slots = new ArrayList<>();
+        for (int y = start.y; y <= end.y; y++) {
+            int column = y * 9;
+            for (int x = start.x; x <= end.x; x++) {
+                slots.add(column + x);
+            }
+        }
+        return slots;
     }
 
 }

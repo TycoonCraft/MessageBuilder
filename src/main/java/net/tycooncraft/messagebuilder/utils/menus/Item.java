@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiConsumer;
 
@@ -28,7 +29,11 @@ public class Item {
     public Item setLore(List<String> lines) {
         ItemMeta meta = item.getItemMeta();
         if (meta == null) return this;
-        meta.setLore(lines);
+        List<String> colorCoded = new ArrayList<>();
+        for (String line : lines) {
+            colorCoded.add(ChatColor.translateAlternateColorCodes('&', line));
+        }
+        meta.setLore(colorCoded);
         this.item.setItemMeta(meta);
         return this;
     }

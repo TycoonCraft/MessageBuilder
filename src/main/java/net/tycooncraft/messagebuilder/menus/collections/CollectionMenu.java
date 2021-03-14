@@ -3,6 +3,7 @@ package net.tycooncraft.messagebuilder.menus.collections;
 import net.tycooncraft.messagebuilder.content.collections.Collection;
 import net.tycooncraft.messagebuilder.content.collections.CollectionAttribute;
 import net.tycooncraft.messagebuilder.menus.MenuModule;
+import net.tycooncraft.messagebuilder.menus.messages.MessageMenu;
 import net.tycooncraft.messagebuilder.utils.menus.Item;
 import net.tycooncraft.messagebuilder.utils.menus.Menu;
 import net.tycooncraft.messagebuilder.utils.menus.enums.MenuType;
@@ -25,6 +26,7 @@ public class CollectionMenu extends Menu {
     private CollectionMenu(MenuModule menuModule, int page) {
         super("&8Collections", 54, "collections", MenuType.STATIC);
 
+        // Fill the border with black stained glass pane
         super.fill(new Point(0, 0), new Point(8, 5), true, Material.BLACK_STAINED_GLASS_PANE);
 
         // Calculate what slots to place collection items in
@@ -42,11 +44,12 @@ public class CollectionMenu extends Menu {
             availableSlots = collections.length - (availableSlots * (page - 1));
 
         for (int i = 0; i < availableSlots; i++) {
+            int finalI = i;
             setItem(collectionSlots.get(i), new Item(Material.PAINTING)
                     .setName("&a" + collections[i + start].getAttribute(CollectionAttribute.NAME).toString())
-                    .setLore(this.wrapDescription(collections[i + start].getAttribute(CollectionAttribute.DESCRIPTION)))
+                    .setLore(this.wrapDescription(collections[i + start].getAttribute(CollectionAttribute.DESCRIPTION), collections[i + start].getMessages().size()))
                     .onClick((player, item) -> {
-
+                        new MessageMenu(menuModule, collections[finalI + start]).open(player);
                     })
             );
         }
@@ -63,11 +66,12 @@ public class CollectionMenu extends Menu {
                 .setLore(Arrays.asList(
                         "&7Set up new collections",
                         "&7in order to keep",
-                        "&7a good overview.",
+                        "&7a good overview",
+                        "&7on your projects.",
                         "&7",
                         "&eClick to start set-up!"))
                 .onClick((player, item) -> {
-
+                    // TODO
                 })
         );
 
@@ -83,7 +87,7 @@ public class CollectionMenu extends Menu {
                     .setName("&aPrevious Page")
                     .setLore(navigateLore)
                     .onClick(((player, item) -> {
-
+                        new CollectionMenu(menuModule, page - 1).open(player);
                     }))
             );
         }
@@ -94,23 +98,23 @@ public class CollectionMenu extends Menu {
                     .setName("&aNext Page")
                     .setLore(navigateLore)
                     .onClick(((player, item) -> {
-
+                        new CollectionMenu(menuModule, page + 1).open(player);
                     }))
             );
         }
     }
 
-    private List<String> wrapDescription(Object oDescription) {
+    private List<String> wrapDescription(Object oDescription, int availableMessages) {
         List<String> wrappedDescription = new ArrayList<>();
         if (oDescription != null) {
             String description = (String) oDescription;
-            String wrappedString = WordUtils.wrap(description, 20);
+            String wrappedString = WordUtils.wrap(description, 25);
             String[] wrapped = wrappedString.split(System.lineSeparator());
 
             wrappedDescription = Arrays.stream(wrapped).map(s -> s = "&7" + s).collect(Collectors.toList());
         }
 
-        Collections.addAll(wrappedDescription, "&7", "&eClick to manage collection!");
+        Collections.addAll(wrappedDescription, "&7", "&8➤ " + availableMessages + " message(s) available", "&7", "&eClick to manage collection!");
         return wrappedDescription;
     }
 }

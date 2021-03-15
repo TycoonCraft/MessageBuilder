@@ -27,7 +27,7 @@ public class MessageMenu extends Menu {
     }
 
     private MessageMenu(MenuModule menuModule, Collection collection, int page) {
-        super("&8Messages", 54, "messages", MenuType.STATIC);
+        super("&8Messages", 54, "messages", MenuType.DYNAMIC);
 
         //  Fill the border with black stained glass pain
         super.fill(new Point(0, 0), new Point(8, 5), true, Material.BLACK_STAINED_GLASS_PANE);
@@ -52,7 +52,7 @@ public class MessageMenu extends Menu {
                     .setName("&a" + messages.get(i + start).getAttribute(MessageAttribute.NAME).toString())
                     .setLore(this.wrapDescription(messages.get(i + start).getAttribute(MessageAttribute.LINES)))
                     .onClick((player, item) -> {
-
+                        // TODO
                     })
             );
         }

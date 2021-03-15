@@ -4,6 +4,7 @@ import net.tycooncraft.messagebuilder.content.collections.Collection;
 import net.tycooncraft.messagebuilder.content.messages.Message;
 import net.tycooncraft.messagebuilder.content.messages.MessageAttribute;
 import net.tycooncraft.messagebuilder.menus.MenuModule;
+import net.tycooncraft.messagebuilder.menus.collections.CollectionMenu;
 import net.tycooncraft.messagebuilder.utils.menus.Item;
 import net.tycooncraft.messagebuilder.utils.menus.Menu;
 import net.tycooncraft.messagebuilder.utils.menus.enums.MenuType;
@@ -45,8 +46,9 @@ public class MessageMenu extends Menu {
         if (messages.size() <= availableSlots * page)
             availableSlots = messages.size() - (availableSlots * (page - 1));
 
+        // Load all messages
         for (int i = 0; i < availableSlots; i++) {
-            setItem(messageSlots.get(i), new Item(Material.PAINTING)
+            setItem(messageSlots.get(i), new Item(Material.PAPER)
                     .setName("&a" + messages.get(i + start).getAttribute(MessageAttribute.NAME).toString())
                     .setLore(this.wrapDescription(messages.get(i + start).getAttribute(MessageAttribute.LINES)))
                     .onClick((player, item) -> {
@@ -54,6 +56,14 @@ public class MessageMenu extends Menu {
                     })
             );
         }
+
+        // Return to collection menu item
+        setItem(48, new Item(Material.SPECTRAL_ARROW)
+                .setName("&aGo Back")
+                .onClick((player, item) -> {
+                    menuModule.getMenu(CollectionMenu.class, player).open(player);
+                })
+        );
 
         // Close menu item
         setItem(49, new Item(Material.REDSTONE)

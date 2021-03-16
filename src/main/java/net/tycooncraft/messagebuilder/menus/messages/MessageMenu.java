@@ -8,6 +8,7 @@ import net.tycooncraft.messagebuilder.menus.collections.CollectionMenu;
 import net.tycooncraft.messagebuilder.utils.menus.Item;
 import net.tycooncraft.messagebuilder.utils.menus.Menu;
 import net.tycooncraft.messagebuilder.utils.menus.enums.MenuType;
+import net.tycooncraft.messagebuilder.utils.menus.enums.SimpleClickType;
 import org.bukkit.Material;
 
 import java.awt.*;
@@ -51,8 +52,11 @@ public class MessageMenu extends Menu {
             setItem(messageSlots.get(i), new Item(Material.PAPER)
                     .setName("&a" + messages.get(i + start).getAttribute(MessageAttribute.NAME).toString())
                     .setLore(this.wrapDescription(messages.get(i + start).getAttribute(MessageAttribute.LINES)))
-                    .onClick((player, item) -> {
-                        // TODO
+                    .setOnClick(SimpleClickType.LEFT, (player, item) -> {
+                        // TODO show the message in chat
+                    })
+                    .setOnClick(SimpleClickType.RIGHT, (player, item) -> {
+                        // TODO edit message
                     })
             );
         }
@@ -60,7 +64,7 @@ public class MessageMenu extends Menu {
         // Return to collection menu item
         setItem(48, new Item(Material.SPECTRAL_ARROW)
                 .setName("&aGo Back")
-                .onClick((player, item) -> {
+                .setOnClick(SimpleClickType.LEFT, (player, item) -> {
                     menuModule.getMenu(CollectionMenu.class, player).open(player, true);
                 })
         );
@@ -68,7 +72,7 @@ public class MessageMenu extends Menu {
         // Close menu item
         setItem(49, new Item(Material.REDSTONE)
                 .setName("&cClose")
-                .onClick(((player, item) -> player.closeInventory()))
+                .setOnClick(SimpleClickType.LEFT, ((player, item) -> player.closeInventory()))
         );
 
         // Create new message item
@@ -81,8 +85,8 @@ public class MessageMenu extends Menu {
                         "&7possible.",
                         "&7",
                         "&eClick to start set-up!"))
-                .onClick((player, item) -> {
-
+                .setOnClick(SimpleClickType.LEFT, (player, item) -> {
+                    // TODO message set-up process
                 })
         );
 
@@ -97,7 +101,7 @@ public class MessageMenu extends Menu {
             setItem(45, new Item(Material.ARROW)
                     .setName("&aPrevious Page")
                     .setLore(navigateLore)
-                    .onClick(((player, item) -> {
+                    .setOnClick(SimpleClickType.LEFT, ((player, item) -> {
                         new MessageMenu(menuModule, collection, page - 1).open(player, true);
                     }))
             );
@@ -108,7 +112,7 @@ public class MessageMenu extends Menu {
             setItem(53, new Item(Material.ARROW)
                     .setName("&aNext Page")
                     .setLore(navigateLore)
-                    .onClick(((player, item) -> {
+                    .setOnClick(SimpleClickType.LEFT, ((player, item) -> {
                         new MessageMenu(menuModule, collection, page + 1).open(player, true);
                     }))
             );

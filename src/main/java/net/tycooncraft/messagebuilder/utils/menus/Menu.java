@@ -2,8 +2,10 @@ package net.tycooncraft.messagebuilder.utils.menus;
 
 import lombok.Getter;
 import net.tycooncraft.messagebuilder.utils.menus.enums.MenuType;
+import net.tycooncraft.messagebuilder.utils.menus.enums.SimpleClickType;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
@@ -38,11 +40,11 @@ public class Menu implements InventoryHolder {
         return this;
     }
 
-    public void onClick(int slot, Player player) {
+    public void onClick(int slot, Player player, ClickType type) {
         Item clicked = slots.get(slot);
         if (clicked == null) return;
 
-        clicked.getConsumer().accept(player, clicked);
+        clicked.onClick(SimpleClickType.getType(type), player);
     }
 
     public void open(Player player, boolean menuSwitch) {

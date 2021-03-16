@@ -8,6 +8,7 @@ import net.tycooncraft.messagebuilder.utils.input.chat.ChatInput;
 import net.tycooncraft.messagebuilder.utils.menus.Item;
 import net.tycooncraft.messagebuilder.utils.menus.Menu;
 import net.tycooncraft.messagebuilder.utils.menus.enums.MenuType;
+import net.tycooncraft.messagebuilder.utils.menus.enums.SimpleClickType;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.Material;
 
@@ -49,8 +50,11 @@ public class CollectionMenu extends Menu {
             setItem(collectionSlots.get(i), new Item(Material.PAINTING)
                     .setName("&a" + collections[i + start].getAttribute(CollectionAttribute.NAME).toString())
                     .setLore(this.wrapDescription(collections[i + start].getAttribute(CollectionAttribute.DESCRIPTION), collections[i + start].getMessages().size()))
-                    .onClick((player, item) -> {
+                    .setOnClick(SimpleClickType.LEFT, (player, item) -> {
                         new MessageMenu(menuModule, collections[finalI + start]).open(player, true);
+                    })
+                    .setOnClick(SimpleClickType.RIGHT, (player, item) -> {
+                        // TODO rename or delete collection
                     })
             );
         }
@@ -58,7 +62,7 @@ public class CollectionMenu extends Menu {
         // Close menu item
         setItem(49, new Item(Material.REDSTONE)
                 .setName("&cClose")
-                .onClick(((player, item) -> player.closeInventory()))
+                .setOnClick(SimpleClickType.LEFT, ((player, item) -> player.closeInventory()))
         );
 
         // Create new collection item
@@ -71,10 +75,10 @@ public class CollectionMenu extends Menu {
                         "&7on your projects.",
                         "&7",
                         "&eClick to start set-up!"))
-                .onClick((player, item) -> {
+                .setOnClick(SimpleClickType.LEFT, (player, item) -> {
                     player.closeInventory();
 
-                    menuModule.getInputModule().queueInput(player.getUniqueId(), new ChatInput(player, "&aEnter a new collection name or type 'cancel':",
+                    menuModule.getInputModule().queueInput(player.getUniqueId(), new ChatInput(player, "&aEnter a new collection name or type 'cancel' to stop the set-up process:",
                             ((inputPlayer, message) -> {
                                 // TODO save
 
@@ -97,7 +101,7 @@ public class CollectionMenu extends Menu {
             setItem(45, new Item(Material.ARROW)
                     .setName("&aPrevious Page")
                     .setLore(navigateLore)
-                    .onClick(((player, item) -> {
+                    .setOnClick(SimpleClickType.LEFT, ((player, item) -> {
                         new CollectionMenu(menuModule, page - 1).open(player, true);
                     }))
             );
@@ -108,9 +112,9 @@ public class CollectionMenu extends Menu {
             setItem(53, new Item(Material.ARROW)
                     .setName("&aNext Page")
                     .setLore(navigateLore)
-                    .onClick(((player, item) -> {
+                    .setOnClick(SimpleClickType.LEFT, (player, item) -> {
                         new CollectionMenu(menuModule, page + 1).open(player, true);
-                    }))
+                    })
             );
         }
     }

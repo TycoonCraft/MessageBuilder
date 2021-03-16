@@ -2,6 +2,7 @@ package net.tycooncraft.messagebuilder.menus;
 
 import lombok.Getter;
 import net.tycooncraft.messagebuilder.content.ContentModule;
+import net.tycooncraft.messagebuilder.utils.input.InputModule;
 import net.tycooncraft.messagebuilder.utils.menus.Menu;
 import net.tycooncraft.messagebuilder.utils.menus.enums.MenuType;
 import org.bukkit.entity.Player;
@@ -17,10 +18,12 @@ public class MenuModule {
 
     // TODO this is really really really bad practice, lets just say its subject to change
     @Getter private final ContentModule contentModule;
+    @Getter private final InputModule inputModule;
 
-    public MenuModule(ContentModule contentModule) {
+    public MenuModule(ContentModule contentModule, InputModule inputModule) {
         this.cache = new HashMap<>();
         this.contentModule = contentModule;
+        this.inputModule = inputModule;
     }
 
     /**

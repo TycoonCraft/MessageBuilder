@@ -4,6 +4,7 @@ import net.tycooncraft.messagebuilder.commands.CommandModule;
 import net.tycooncraft.messagebuilder.content.ContentModule;
 import net.tycooncraft.messagebuilder.menus.MenuModule;
 import net.tycooncraft.messagebuilder.resources.PluginFile;
+import net.tycooncraft.messagebuilder.utils.input.InputModule;
 import net.tycooncraft.messagebuilder.utils.menus.listeners.InventoryClickListener;
 import net.tycooncraft.messagebuilder.utils.messaging.MessageUtil;
 import org.bukkit.Bukkit;
@@ -19,7 +20,8 @@ public final class MessageBuilder extends JavaPlugin {
         MessageUtil messageUtil = new MessageUtil();
 
         ContentModule contentModule = new ContentModule(savesFile);
-        MenuModule menuModule = new MenuModule(contentModule);
+        InputModule inputModule = new InputModule(this);
+        MenuModule menuModule = new MenuModule(contentModule, inputModule);
         CommandModule commandModule = new CommandModule(this, messageUtil, menuModule);
 
         this.registerListeners(this);

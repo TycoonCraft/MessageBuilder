@@ -12,11 +12,12 @@ public class ChatInput implements Input {
 
     private final Player player;
     private final BiConsumer<Player, String> consumer;
-    @Getter private static final InputType type = InputType.CHAT;
+    @Getter private final InputType type = InputType.CHAT;
 
     private static final String CANCELLED_MESSAGE = ChatColor.translateAlternateColorCodes('&', "&cInput cancelled.");
 
-    public ChatInput(Player player, BiConsumer<Player, String> onInput) {
+    public ChatInput(Player player, String prompt, BiConsumer<Player, String> onInput) {
+        player.sendMessage(ChatColor.translateAlternateColorCodes('&', prompt));
         this.player = player;
         this.consumer = onInput;
     }

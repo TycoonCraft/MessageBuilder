@@ -1,6 +1,7 @@
 package net.tycooncraft.messagebuilder.menus;
 
 import lombok.Getter;
+import net.tycooncraft.messagebuilder.MessageBuilder;
 import net.tycooncraft.messagebuilder.content.ContentModule;
 import net.tycooncraft.messagebuilder.utils.input.InputModule;
 import net.tycooncraft.messagebuilder.utils.menus.Menu;
@@ -20,10 +21,13 @@ public class MenuModule {
     @Getter private final ContentModule contentModule;
     @Getter private final InputModule inputModule;
 
-    public MenuModule(ContentModule contentModule, InputModule inputModule) {
+    private final MessageBuilder instance;
+
+    public MenuModule(MessageBuilder instance, ContentModule contentModule, InputModule inputModule) {
         this.cache = new HashMap<>();
         this.contentModule = contentModule;
         this.inputModule = inputModule;
+        this.instance = instance;
     }
 
     /**
@@ -48,8 +52,8 @@ public class MenuModule {
      * Reload a menu that uses MenuType.STATIC
      * @param menuClass menu class to reload
      */
-    public void reload(Class<?> menuClass) {
-        this.load(menuClass, true);
+    public Menu reload(Class<?> menuClass) {
+        return this.load(menuClass, true);
     }
 
     /**
@@ -85,4 +89,9 @@ public class MenuModule {
 
         return new Menu("&8Menu not found", 9, MenuType.ERROR);
     }
+
+    public void openMenuSync(Menu menu, Player player, boolean switchMenu) {
+        instance.getServer().getScheduler().runTask(instance, () -> menu.open(player, switchMenu));
+    }
+
 }

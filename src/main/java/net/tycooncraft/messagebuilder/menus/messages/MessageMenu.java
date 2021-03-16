@@ -61,7 +61,7 @@ public class MessageMenu extends Menu {
         setItem(48, new Item(Material.SPECTRAL_ARROW)
                 .setName("&aGo Back")
                 .onClick((player, item) -> {
-                    menuModule.getMenu(CollectionMenu.class, player).open(player);
+                    menuModule.getMenu(CollectionMenu.class, player).open(player, true);
                 })
         );
 
@@ -98,7 +98,7 @@ public class MessageMenu extends Menu {
                     .setName("&aPrevious Page")
                     .setLore(navigateLore)
                     .onClick(((player, item) -> {
-                        new MessageMenu(menuModule, collection, page - 1).open(player);
+                        new MessageMenu(menuModule, collection, page - 1).open(player, true);
                     }))
             );
         }
@@ -109,7 +109,7 @@ public class MessageMenu extends Menu {
                     .setName("&aNext Page")
                     .setLore(navigateLore)
                     .onClick(((player, item) -> {
-                        new MessageMenu(menuModule, collection, page + 1).open(player);
+                        new MessageMenu(menuModule, collection, page + 1).open(player, true);
                     }))
             );
         }

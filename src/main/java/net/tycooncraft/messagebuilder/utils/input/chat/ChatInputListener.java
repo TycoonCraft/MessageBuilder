@@ -26,6 +26,8 @@ public class ChatInputListener implements Listener, InputListener {
             ChatInput queued = inputQueue.get(uuid);
             inputQueue.remove(uuid);
 
+            event.setCancelled(true);
+
             if (message.equalsIgnoreCase("cancel")) {
                 queued.cancel();
                 return;

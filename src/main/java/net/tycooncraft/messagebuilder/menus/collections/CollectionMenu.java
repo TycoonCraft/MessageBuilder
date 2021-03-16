@@ -4,6 +4,7 @@ import net.tycooncraft.messagebuilder.content.collections.Collection;
 import net.tycooncraft.messagebuilder.content.collections.CollectionAttribute;
 import net.tycooncraft.messagebuilder.menus.MenuModule;
 import net.tycooncraft.messagebuilder.menus.messages.MessageMenu;
+import net.tycooncraft.messagebuilder.utils.input.chat.ChatInput;
 import net.tycooncraft.messagebuilder.utils.menus.Item;
 import net.tycooncraft.messagebuilder.utils.menus.Menu;
 import net.tycooncraft.messagebuilder.utils.menus.enums.MenuType;
@@ -49,7 +50,7 @@ public class CollectionMenu extends Menu {
                     .setName("&a" + collections[i + start].getAttribute(CollectionAttribute.NAME).toString())
                     .setLore(this.wrapDescription(collections[i + start].getAttribute(CollectionAttribute.DESCRIPTION), collections[i + start].getMessages().size()))
                     .onClick((player, item) -> {
-                        new MessageMenu(menuModule, collections[finalI + start]).open(player);
+                        new MessageMenu(menuModule, collections[finalI + start]).open(player, true);
                     })
             );
         }
@@ -71,7 +72,17 @@ public class CollectionMenu extends Menu {
                         "&7",
                         "&eClick to start set-up!"))
                 .onClick((player, item) -> {
-                    // TODO
+                    player.closeInventory();
+
+                    menuModule.getInputModule().queueInput(player.getUniqueId(), new ChatInput(player, "&aEnter a new collection name or type 'cancel':",
+                            ((inputPlayer, message) -> {
+                                // TODO save
+
+                                Menu reloadedMenu = menuModule.reload(CollectionMenu.class);
+                                menuModule.openMenuSync(reloadedMenu, inputPlayer, true);
+                            })
+                    ));
+
                 })
         );
 
@@ -87,7 +98,7 @@ public class CollectionMenu extends Menu {
                     .setName("&aPrevious Page")
                     .setLore(navigateLore)
                     .onClick(((player, item) -> {
-                        new CollectionMenu(menuModule, page - 1).open(player);
+                        new CollectionMenu(menuModule, page - 1).open(player, true);
                     }))
             );
         }
@@ -98,7 +109,7 @@ public class CollectionMenu extends Menu {
                     .setName("&aNext Page")
                     .setLore(navigateLore)
                     .onClick(((player, item) -> {
-                        new CollectionMenu(menuModule, page + 1).open(player);
+                        new CollectionMenu(menuModule, page + 1).open(player, true);
                     }))
             );
         }

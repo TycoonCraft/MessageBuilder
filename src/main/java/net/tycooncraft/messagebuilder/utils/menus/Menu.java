@@ -2,9 +2,7 @@ package net.tycooncraft.messagebuilder.utils.menus;
 
 import lombok.Getter;
 import net.tycooncraft.messagebuilder.utils.menus.enums.MenuType;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
@@ -47,9 +45,11 @@ public class Menu implements InventoryHolder {
         clicked.getConsumer().accept(player, clicked);
     }
 
-    public void open(Player player) {
+    public void open(Player player, boolean menuSwitch) {
         if (player.hasPermission("messagebuilder.menu." + name)) {
             player.openInventory(this.inventory);
+            if (menuSwitch)
+                player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, SoundCategory.MASTER, 0.7f, 1.0f);
         }
     }
 

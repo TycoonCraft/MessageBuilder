@@ -21,7 +21,7 @@ public final class MessageBuilder extends JavaPlugin {
 
         ContentModule contentModule = new ContentModule(savesFile);
         InputModule inputModule = new InputModule(this);
-        MenuModule menuModule = new MenuModule(contentModule, inputModule);
+        MenuModule menuModule = new MenuModule(this, contentModule, inputModule);
         CommandModule commandModule = new CommandModule(this, messageUtil, menuModule);
 
         this.registerListeners(this);

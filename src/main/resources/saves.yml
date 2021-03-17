@@ -1,7 +1,6 @@
 collections:
-  # Example collection
-  tycooncinematics:
-    name: TycoonCinematics
+  # Example collections
+  TycoonCinematics:
     messages:
       1:
         name: "Help page"
@@ -11,3 +10,16 @@ collections:
           - "&a/cinematics create &e<name> &7Create a new track"
           - "&7"
           - "&7---------- &e&lTYCOONCINEMATICS &7----------"
+  TycoonFilms:
+    description: The core package used for the cinematics and shows plugins
+    messages:
+      1:
+        name: "Help page"
+        lines:
+          - "&7---------- &e&lTYCOONFILMS &7----------"
+          - "&7"
+          - "&7Download &aTycoonCinematics &7for creating smooth paths to follow."
+          - "&7Download &aTycoonShows &7for creating a queue of in-game events."
+          - "&7Use this plugin to create seamlessly synchronized tracks."
+          - "&7"
+          - "&7---------- &e&lTYCOONFILMS &7----------"

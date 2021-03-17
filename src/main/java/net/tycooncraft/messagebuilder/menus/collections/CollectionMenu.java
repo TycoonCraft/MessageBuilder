@@ -2,6 +2,7 @@ package net.tycooncraft.messagebuilder.menus.collections;
 
 import net.tycooncraft.messagebuilder.content.collections.Collection;
 import net.tycooncraft.messagebuilder.content.collections.CollectionAttribute;
+import net.tycooncraft.messagebuilder.content.objects.ValidationResponse;
 import net.tycooncraft.messagebuilder.menus.MenuModule;
 import net.tycooncraft.messagebuilder.menus.messages.MessageMenu;
 import net.tycooncraft.messagebuilder.utils.input.chat.ChatInput;
@@ -10,6 +11,7 @@ import net.tycooncraft.messagebuilder.utils.menus.Menu;
 import net.tycooncraft.messagebuilder.utils.menus.enums.MenuType;
 import net.tycooncraft.messagebuilder.utils.menus.enums.SimpleClickType;
 import org.apache.commons.lang.WordUtils;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 
 import java.awt.*;
@@ -80,7 +82,8 @@ public class CollectionMenu extends Menu {
 
                     menuModule.getInputModule().queueInput(player.getUniqueId(), new ChatInput(player, "&aEnter a new collection name or type 'cancel' to stop the set-up process:",
                             ((inputPlayer, message) -> {
-                                // TODO save
+                                ValidationResponse response = menuModule.getContentModule().createCollection(message);
+                                player.sendMessage(ChatColor.translateAlternateColorCodes('&', response.getMessage()));
 
                                 Menu reloadedMenu = menuModule.reload(CollectionMenu.class);
                                 menuModule.openMenuSync(reloadedMenu, inputPlayer, true);

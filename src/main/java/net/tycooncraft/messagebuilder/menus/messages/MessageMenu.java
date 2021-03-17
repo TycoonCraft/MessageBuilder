@@ -9,6 +9,7 @@ import net.tycooncraft.messagebuilder.utils.menus.Item;
 import net.tycooncraft.messagebuilder.utils.menus.Menu;
 import net.tycooncraft.messagebuilder.utils.menus.enums.MenuType;
 import net.tycooncraft.messagebuilder.utils.menus.enums.SimpleClickType;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 
 import java.awt.*;
@@ -49,11 +50,21 @@ public class MessageMenu extends Menu {
 
         // Load all messages
         for (int i = 0; i < availableSlots; i++) {
+            Message message = messages.get(i + start);
             setItem(messageSlots.get(i), new Item(Material.PAPER)
-                    .setName("&a" + messages.get(i + start).getAttribute(MessageAttribute.NAME).toString())
-                    .setLore(this.wrapDescription(messages.get(i + start).getAttribute(MessageAttribute.LINES)))
+                    .setName("&a" + message.getAttribute(MessageAttribute.NAME).toString())
+                    .setLore(this.wrapDescription(message.getAttribute(MessageAttribute.LINES)))
                     .setOnClick(SimpleClickType.LEFT, (player, item) -> {
-                        // TODO show the message in chat
+                        // Close inventory
+                        player.closeInventory();
+                        // Fetch lines and send color coded message
+                        Object oLines = message.getAttribute(MessageAttribute.LINES);
+                        if (oLines != null) {
+                            List<String> description = (List<String>) oLines;
+                            for (String line : description) {
+                                player.sendMessage(ChatColor.translateAlternateColorCodes('&', line));
+                            }
+                        }
                     })
                     .setOnClick(SimpleClickType.RIGHT, (player, item) -> {
                         // TODO edit message
@@ -126,7 +137,7 @@ public class MessageMenu extends Menu {
             wrappedDescription.addAll(description);
         }
 
-        Collections.addAll(wrappedDescription, "&8End Message", "&7", "&eClick to manage message!");
+        Collections.addAll(wrappedDescription, "&8End Message", "&7", "&eLeft-click to show in chat.", "&bRight-click to edit.");
         return wrappedDescription;
     }
 }

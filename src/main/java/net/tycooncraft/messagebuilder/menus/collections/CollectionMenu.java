@@ -129,7 +129,7 @@ public class CollectionMenu extends Menu {
             wrappedDescription = Arrays.stream(wrapped).map(s -> s = "&7" + s).collect(Collectors.toList());
         }
 
-        Collections.addAll(wrappedDescription, "&7", "&8➤ " + availableMessages + " message(s) available", "&7", "&eClick to manage collection!");
+        Collections.addAll(wrappedDescription, "&7", "&8➤ " + availableMessages + " message(s) available", "&7", "&eLeft-click to show messages.", "&bRight-click to edit collection.");
         return wrappedDescription;
     }
 }
